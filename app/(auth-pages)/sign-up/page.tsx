@@ -1,51 +1,45 @@
-import { signUpAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+// sign-up/page.tsx
+import { Message } from "@/components/form-message";
 import Link from "next/link";
-import { SmtpMessage } from "../smtp-message";
+import { SignupForm } from "@/app/form/signUpForm";
+import { AlertNotification } from "@/components/alert-notification";
 
 export default async function Signup(props: {
   searchParams: Promise<Message>;
 }) {
   const searchParams = await props.searchParams;
-  if ("message" in searchParams) {
-    return (
-      <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
-        <FormMessage message={searchParams} />
-      </div>
-    );
-  }
 
   return (
-    <>
-      <form className="flex flex-col min-w-64 max-w-64 mx-auto">
-        <h1 className="text-2xl font-medium">Sign up</h1>
-        <p className="text-sm text text-foreground">
-          Already have an account?{" "}
-          <Link className="text-primary font-medium underline" href="/sign-in">
-            Sign in
-          </Link>
-        </p>
-        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-          <Label htmlFor="email">Email</Label>
-          <Input name="email" placeholder="you@example.com" required />
-          <Label htmlFor="password">Password</Label>
-          <Input
-            type="password"
-            name="password"
-            placeholder="Your password"
-            minLength={6}
-            required
-          />
-          <SubmitButton formAction={signUpAction} pendingText="Signing up...">
-            Sign up
-          </SubmitButton>
-          <FormMessage message={searchParams} />
+    <div
+      className="min-h-screen flex items-center justify-center w-full px-8 py-12"
+      style={{
+        backgroundImage: "url('/slide1.jpg')", // Menggunakan gambar latar yang sama dengan sign-in
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        width: '100%',
+        height: '100vh',
+      }}
+    >
+      <div className="w-full max-w-lg bg-white bg-opacity-95 rounded-lg shadow-xl p-10 mx-4 overflow-y-auto max-h-[90vh]">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-semibold text-primary mb-2">Sign up</h1>
+          <div className="h-1 w-16 bg-primary mx-auto rounded-full"></div>
+          <p className="text-sm text-muted-foreground mt-4">
+            Already have an account?{" "}
+            <Link className="text-primary font-medium hover:underline transition-all" href="/sign-in">
+              Sign in
+            </Link>
+          </p>
         </div>
-      </form>
-      <SmtpMessage />
-    </>
+
+        {/* Alert notification for success or error */}
+        {(("success" in searchParams) || ("error" in searchParams) || ("message" in searchParams)) && (
+          <AlertNotification message={searchParams} />
+        )}
+
+        <SignupForm searchParams={searchParams} />
+      </div>
+    </div>
   );
 }

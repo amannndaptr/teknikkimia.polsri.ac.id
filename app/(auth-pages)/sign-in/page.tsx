@@ -1,44 +1,52 @@
-import { signInAction } from "@/app/actions";
 import { FormMessage, Message } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Link from "next/link";
+import { SigninForm } from "@/app/form/signInForm";
 
-export default async function Login(props: { searchParams: Promise<Message> }) {
+export default async function SignIn(props: {
+  searchParams: Promise<Message>;
+}) {
   const searchParams = await props.searchParams;
-  return (
-    <form className="flex-1 flex flex-col min-w-64">
-      <h1 className="text-2xl font-medium">Sign in</h1>
-      <p className="text-sm text-foreground">
-        Don't have an account?{" "}
-        <Link className="text-foreground font-medium underline" href="/sign-up">
-          Sign up
-        </Link>
-      </p>
-      <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-        <Label htmlFor="email">Email</Label>
-        <Input name="email" placeholder="you@example.com" required />
-        <div className="flex justify-between items-center">
-          <Label htmlFor="password">Password</Label>
-          <Link
-            className="text-xs text-foreground underline"
-            href="/forgot-password"
-          >
-            Forgot Password?
-          </Link>
-        </div>
-        <Input
-          type="password"
-          name="password"
-          placeholder="Your password"
-          required
-        />
-        <SubmitButton pendingText="Signing In..." formAction={signInAction}>
-          Sign in
-        </SubmitButton>
+  if ("message" in searchParams) {
+    return (
+      <div className="w-full flex-1 flex items-center h-screen sm:max-w-md justify-center gap-2 p-4">
         <FormMessage message={searchParams} />
       </div>
-    </form>
+    );
+  }
+
+  return (
+    <div
+      className="min-h-screen flex items-center justify-center w-full"
+      style={{
+        backgroundImage: "url('/slide1.jpg')", // PASTIKAN PATH INI BENAR & FOTO ADA DI FOLDER PUBLIC
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        width: '100%',
+        height: '100vh',
+      }}
+    >
+      <div className="w-full max-w-xs bg-white bg-opacity-95 rounded-lg shadow-xl px-8 py-3 mx-4">
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="w-full">
+            <div className="mb-2 text-center"> {/* Jarak bawah grup judul ke form */}
+              <h1 
+                className="inline-block text-2xl font-semibold text-primary relative pb-1.5 after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-primary after:rounded-full"
+              >
+                Welcome back!
+              </h1>
+            </div>
+            
+            <SigninForm searchParams={searchParams} />
+            <p className="text-xs text-muted-foreground mt-1 text-center"> {/* Mengubah ukuran font menjadi text-xs */}
+              Don't have an account?{" "}
+              <Link className="text-primary font-medium hover:underline transition-all" href="/sign-up">
+                Sign up
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+   images: {
+    domains: ['psnwscikbfrralawhvol.supabase.co'],
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '3mb',
+    }
+  },
 };
 
 export default nextConfig;
