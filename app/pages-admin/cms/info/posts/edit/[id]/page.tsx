@@ -28,6 +28,7 @@ interface Section {
     post_id?: string;
     content: string;
     sort_order: number;
+    image?: string | null; // Tambahan untuk gambar per section
 }
 
 export default function EditPostForm() {
@@ -48,7 +49,7 @@ export default function EditPostForm() {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [sections, setSections] = useState<Section[]>([
-        { content: '', sort_order: 0 }
+        { content: '', sort_order: 0, image: null }
     ]);
     const supabase = createClient();
 
@@ -165,6 +166,42 @@ export default function EditPostForm() {
         }
     }
 
+    // Handler upload gambar untuk section
+    async function handleSectionImageUpload(e: React.ChangeEvent<HTMLInputElement>, index: number) {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Validasi tipe file (hanya gambar)
+        if (!file.type.startsWith('image/')) {
+            alert('File harus berupa gambar');
+            return;
+        }
+        // Validasi ukuran file (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Ukuran file terlalu besar (max 5MB)');
+            return;
+        }
+
+        const fileExt = file.name.split('.').pop();
+        const fileName = `section-${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
+        const filePath = fileName;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('berita') // Pastikan nama bucket ini benar
+            .upload(filePath, file);
+        if (uploadError) {
+            alert(`Gagal mengupload gambar section: ${uploadError.message || 'Unknown error'}`);
+            return;
+        }
+        const { data: publicUrlData } = supabase.storage
+            .from('berita') // Pastikan nama bucket ini benar
+            .getPublicUrl(filePath);
+        if (publicUrlData?.publicUrl) {
+            const updatedSections = [...sections];
+            updatedSections[index].image = publicUrlData.publicUrl;
+            setSections(updatedSections);
+        }
+    }
+
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
         setSaving(true);
@@ -237,7 +274,8 @@ export default function EditPostForm() {
                         post_id: postId,
                         content: section.content,
                         sort_order: index, // Memastikan urutan yang benar
-                        created_at: new Date().toISOString() // Menambahkan created_at untuk section baru
+                        image: section.image || null, // Menambahkan gambar section
+                        created_at: new Date().toISOString()
                     }))
                 );
 
@@ -287,7 +325,7 @@ export default function EditPostForm() {
             ? Math.max(...sections.map(s => s.sort_order)) + 1
             : 0;
 
-        setSections([...sections, { content: '', sort_order: newSortOrder }]);
+        setSections([...sections, { content: '', sort_order: newSortOrder, image: null }]);
     }
 
     function removeSection(index: number) {
@@ -425,7 +463,19 @@ export default function EditPostForm() {
                                                     rows={8}
                                                     placeholder="Tulis isi bagian berita di sini..."
                                                 />
-                                                <div className="text-xs text-muted-foreground/80 mt-2"></div> {/* Menghapus hint markdown agar konsisten */}
+                                                {/* Input upload gambar section */}
+                                                <div className="mt-2">
+                                                    <label className="block text-sm font-medium text-muted-foreground mb-1">Gambar Bagian (Opsional)</label>
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={(e) => handleSectionImageUpload(e, index)}
+                                                        className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+                                                    />
+                                                    {section.image && (
+                                                        <img src={section.image} alt={`Section ${index + 1} Image`} className="mt-2 max-h-40 rounded border border-border" />
+                                                    )}
+                                                </div>
                                             </div>
                                         ))}
                                     </div>

@@ -19,16 +19,16 @@ interface MahasiswaData {
 
 interface SidebarButtonProps {
     icon: React.ReactNode;
-    label: React.ReactNode; // Ubah tipe label agar bisa menerima JSX (untuk ikon chevron)
+    label: React.ReactNode;
     onClick: () => void;
-    isActive?: boolean; // Tambahkan prop isActive
-    isExpanded?: boolean; // Tambahkan prop isExpanded (untuk dropdown)
+    isActive?: boolean;
+    isExpanded?: boolean; 
 }
 
 export default function SidebarMahasiswa() {
     const [user, setUser] = useState<MahasiswaData | null>(null);
     const [loading, setLoading] = useState(true);
-    const [isLayananOpen, setIsLayananOpen] = useState(false); // State untuk dropdown Layanan Mahasiswa
+    const [isLayananOpen, setIsLayananOpen] = useState(false); 
     const pathname = usePathname(); // Dapatkan pathname saat ini
     const router = useRouter();
     const supabase = createClient();

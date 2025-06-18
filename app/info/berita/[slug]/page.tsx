@@ -38,10 +38,16 @@ interface RelatedNews {
     };
 }
 
+interface SectionData {
+    content: string;
+    image?: string | null;
+}
+
 export default function PostDetail() {
     const { slug } = useParams();
     const [post, setPost] = useState<BeritaDetail | null>(null);
     const [relatedNews, setRelatedNews] = useState<RelatedNews[]>([]);
+    const [sections, setSections] = useState<SectionData[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const supabase = createClient();
@@ -84,7 +90,7 @@ export default function PostDetail() {
                 // Fetch the post content from sections table
                 const { data: sectionData, error: sectionError } = await supabase
                     .from('sections')
-                    .select('content')
+                    .select('content, image')
                     .eq('post_id', postData.id)
                     .order('sort_order', { ascending: true });
 
@@ -93,6 +99,8 @@ export default function PostDetail() {
                     setError("Gagal memuat konten artikel");
                     return;
                 }
+
+                setSections(sectionData || []);
 
                 // Nama bucket Supabase Storage untuk gambar berita
                 const BERITA_IMAGE_BUCKET = 'berita';
@@ -110,7 +118,7 @@ export default function PostDetail() {
                     }
                 }
 
-                // Combine the post data with its content
+                // Combine the post data with its content (tanpa join content)
                 const postWithContent: BeritaDetail = {
                     ...postData,
                     post_image: finalPostImage,
@@ -121,9 +129,7 @@ export default function PostDetail() {
                             slug: postData.categories[0].slug
                         }
                         : undefined,
-                    content: sectionData && sectionData.length > 0
-                        ? sectionData.map(section => section.content).join('\n\n')
-                        : '',
+                    content: '', // Tidak dipakai lagi, gunakan sections
                 };
 
                 setPost(postWithContent);
@@ -342,9 +348,25 @@ export default function PostDetail() {
 
                                     {/* Content */}
                                     <div className="text-gray-700 text-base md:text-lg leading-relaxed max-w-none">
-                                        {post.content.split('\n').map((paragraph, index) => (
-                                            <p key={index} className="mb-5 last:mb-0">{paragraph}</p>
-                                        ))}
+                                        {sections.length > 0 ? (
+                                            sections.map((section, index) => (
+                                                <div key={index} className="mb-6 last:mb-0"> {/* Spasi antar section lebih besar */}
+                                                    <p className="mb-2 whitespace-pre-line">{section.content}</p>
+                                                    {section.image && (
+                                                        <div className="mb-4 flex justify-center"> {/* Gambar di tengah dan margin bawah */}
+                                                            <img
+                                                                src={section.image}
+                                                                alt={`Section Image ${index + 1}`}
+                                                                style={{ maxWidth: '400px', maxHeight: '200px', width: '100%', height: 'auto' }}
+                                                                className="rounded-lg border border-gray-200 shadow-sm"
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p>Tidak ada konten.</p>
+                                        )}
                                     </div>
                                 </div>
                             </div>

@@ -202,8 +202,8 @@ export default function PostsManagement() {
                             </div>
                         ) : (
                             <div className="overflow-x-auto">
-                                <table className="min-w-full divide-y divide-border"> {/* Styling tabel disesuaikan */}
-                                    <thead className="bg-muted/50"> {/* Styling thead disesuaikan */}
+                                <table className="min-w-full divide-y divide-border"> 
+                                    <thead className="bg-muted/50">
                                         <tr>
                                             <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Title</th>
                                             <th scope="col" className="px-4 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Category</th>
@@ -213,33 +213,33 @@ export default function PostsManagement() {
                                             <th scope="col" className="px-4 py-2 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="bg-card divide-y divide-border"> {/* Styling tbody disesuaikan */}
+                                    <tbody className="bg-card divide-y divide-border"> 
                                         {filteredPosts.map((post) => (
                                             <tr key={post.id} className="hover:bg-muted/30 transition-colors">
                                                 <td className="px-4 py-2 whitespace-nowrap">
-                                                    <div className="text-sm font-medium text-foreground truncate max-w-xs">{post.title}</div> {/* Warna teks disesuaikan */}
-                                                    <div className="text-xs text-muted-foreground">{post.slug}</div> {/* Warna teks disesuaikan */}
+                                                    <div className="text-sm font-medium text-foreground truncate max-w-xs">{post.title}</div> 
+                                                    <div className="text-xs text-muted-foreground">{post.slug}</div> 
                                                 </td>
                                                 <td className="px-4 py-2 whitespace-nowrap">
-                                                    <div className="text-sm text-foreground">{getCategoryName(post.category_id)}</div> {/* Warna teks disesuaikan */}
+                                                    <div className="text-sm text-foreground">{getCategoryName(post.category_id)}</div> 
                                                 </td>
                                                 <td className="px-4 py-2 whitespace-nowrap">
                                                     {getStatusBadge(post.status)}
                                                 </td>
                                                 <td className="px-4 py-2 whitespace-nowrap">
-                                                    <div className="text-sm text-muted-foreground">{formatDate(post.published_at)}</div> {/* Warna teks disesuaikan */}
+                                                    <div className="text-sm text-muted-foreground">{formatDate(post.published_at)}</div> 
                                                 </td>
                                                 <td className="px-4 py-2 whitespace-nowrap">
-                                                    <div className="text-sm text-muted-foreground">{formatDate(post.created_at)}</div> {/* Warna teks disesuaikan */}
+                                                    <div className="text-sm text-muted-foreground">{formatDate(post.created_at)}</div>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <div className="flex justify-end space-x-2">
                                                         <Link href={`/pages-admin/cms/info/posts/edit/${post.id}`}>
-                                                            <button className="text-primary hover:text-primary/80"> {/* Warna tombol disesuaikan */}
+                                                            <button className="text-primary hover:text-primary/80">
                                                                 <Pencil className="w-5 h-5" />
                                                             </button>
                                                         </Link>
-                                                        <button onClick={() => deletePost(post.id)} className="text-destructive hover:text-destructive/80"> {/* Warna tombol disesuaikan */}
+                                                        <button onClick={() => deletePost(post.id)} className="text-destructive hover:text-destructive/80"> 
                                                             <Trash2 className="w-5 h-5" />
                                                         </button>
                                                     </div>

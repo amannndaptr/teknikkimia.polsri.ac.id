@@ -394,7 +394,7 @@ const DaftarDosen: FC = () => {
                 {dosenData.staff.length > 0 && (
                     <div className="space-y-6">
                         <h2 className="text-2xl font-bold border-red-800 pb-3 border-b-2">
-                            Tenaga Pendidik
+                            Tenaga Kependidikan
                         </h2>
                         {/* Flex container to center the grid */}
                         <div className="flex justify-center">

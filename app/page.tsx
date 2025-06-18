@@ -58,6 +58,9 @@ interface TestimoniAlumniItem {
   angkatan: string;
   testimoni: string;
   created_at: string;
+  alumni?: { // Data pekerjaan dari tabel 'alumni' yang berelasi
+    pekerjaan?: string | null;
+  } | null;
 }
 
 const images = ["/slide1.jpg", "/slide2.jpg", "/slide3.jpg"];
@@ -243,7 +246,10 @@ export default function Home() {
       setTestimoniError(null);
       const { data, error } = await supabase
         .from('testimoni_alumni') // Pastikan nama tabel ini benar
-        .select('id, photo_url, nama_alumni, prodi, angkatan, testimoni, created_at') // Hapus storagePath jika tidak ada
+        .select(`
+          id, photo_url, nama_alumni, prodi, angkatan, testimoni, created_at,
+          alumni:alumni_id (pekerjaan) 
+        `) // Mengambil 'pekerjaan' dari tabel 'alumni' melalui relasi 'alumni_id'
         .order('created_at', { ascending: false }); // Hapus limit untuk mengambil semua testimoni
 
       if (error) {
@@ -258,7 +264,14 @@ export default function Home() {
 
       if (data && data.length > 0) {
         console.log("Supabase data fetched for testimoni alumni:", data);
-        setTestimoniData(data);
+        const formattedData = data.map(item => ({
+          ...item,
+          // Ensure 'alumni' is an object or null, not an array
+          alumni: Array.isArray(item.alumni) && item.alumni.length > 0 
+            ? item.alumni[0] 
+            : (item.alumni && !Array.isArray(item.alumni) ? item.alumni : null)
+        }));
+        setTestimoniData(formattedData as TestimoniAlumniItem[]);
         // Calculate the middle index and set it
         // This will ensure the carousel starts from the middle testimonial
         const middleIndex = Math.floor(data.length / 2);
@@ -440,6 +453,11 @@ export default function Home() {
 
       {/* Company Logos Section with distinct background */}
       <section className="py-5 bg-gradient-to-r from-gray-100 to-gray-200"> {/* Mengurangi padding vertikal lagi */}
+        <div className="container mx-auto px-6 mb-4"> {/* Tambahkan margin bottom untuk jarak */}
+          <h2 className="text-2xl font-bold text-center text-gray-700">
+            Kerjasama Industri
+          </h2>
+        </div>
         <div className="container mx-auto px-6">
           <div className="flex justify-center items-center overflow-hidden bg-white rounded-xl shadow-lg p-4"> {/* Mengurangi padding internal */}
             <motion.div
@@ -789,9 +807,9 @@ export default function Home() {
                       }}
                       transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     >
-                      <div className="bg-white rounded-xl shadow-lg pt-6 px-6 pb-4 flex flex-col transition-all duration-300 h-full"> {/* Menghilangkan hover:shadow-2xl */}
-                        <div className="flex flex-col sm:flex-row items-start mb-4 w-full">
-                          <div className="relative w-32 md:w-36 rounded-md overflow-hidden shadow-md flex-shrink-0" style={{ aspectRatio: '3/4' }}>
+                      <div className="bg-white rounded-xl shadow-lg pt-4 px-4 pb-3 flex flex-col transition-all duration-300 h-full"> {/* Padding dikurangi: pt-4 px-4 pb-3 */}
+                        <div className="flex flex-col sm:flex-row items-start mb-3 w-full"> {/* mb-3 */}
+                          <div className="relative w-24 md:w-28 rounded-md overflow-hidden shadow-md flex-shrink-0" style={{ aspectRatio: '2/3' }}> {/* Aspect ratio diubah ke 2/3 untuk frame lebih panjang */}
                             <img
                               src={testimoni.photo_url || "/avatar-placeholder.png"}
                               alt={testimoni.nama_alumni}
@@ -799,15 +817,21 @@ export default function Home() {
                               className="w-full h-full object-cover"
                             />
                           </div>
-                          <div className="sm:ml-5 mt-2 sm:mt-0 flex flex-col flex-grow">
-                            <h3 className="text-lg md:text-xl font-semibold text-gray-800">
-                              <span className="text-base md:text-lg font-semibold text-gray-800">{testimoni.nama_alumni}</span>
+                          <div className="sm:ml-4 mt-2 sm:mt-0 flex flex-col flex-grow"> {/* sm:ml-4 */}
+                            <h3 className="text-base md:text-lg font-semibold text-gray-800"> {/* Ukuran font nama dikurangi: text-base md:text-lg */}
+                              <span className="font-semibold text-gray-800">{testimoni.nama_alumni}</span>
                             </h3> {/* Garis pemisah */}
-                            <div className="w-full h-[1.5px] bg-gray-200 my-2"></div> {/* Garis pemisah ditebalkan */}
-                            <p className="text-sm text-gray-700 font-semibold mb-2"> {/* Tambahkan mb-2 di sini */}
+                            {/* Menampilkan Informasi Pekerjaan Alumni */}
+                            {testimoni.alumni?.pekerjaan && (
+                              <p className="text-[11px] md:text-xs text-gray-600 mt-0.5 mb-0.5"> {/* Font pekerjaan lebih kecil, margin dikurangi */}
+                                {testimoni.alumni.pekerjaan}
+                              </p>
+                            )}
+                            <div className="w-full h-[1px] bg-gray-200 my-1.5"></div> {/* Garis pemisah lebih tipis, margin dikurangi */}
+                            <p className="text-xs md:text-sm text-gray-700 font-semibold mb-1.5"> {/* Font prodi/angkatan lebih kecil, margin dikurangi */}
                               {testimoni.prodi} - {testimoni.angkatan}
                             </p>
-                            <p className="text-gray-700 italic text-sm leading-relaxed mb-0">
+                            <p className="text-xs md:text-sm text-gray-600 italic leading-snug mt-1 mb-0"> {/* Font testimoni lebih kecil, leading-snug, text-gray-600, margin dikurangi */}
                               "{/* Tanda kutip pembuka */}<span className="inline">{testimoniText}</span>{/* Teks testimoni */}"
                             </p>
                           </div>

@@ -30,6 +30,7 @@ interface Section {
     post_id?: string;
     content: string;
     sort_order: number;
+    image?: string | null; // Tambahan untuk gambar per section
 }
 
 export default function PostForm() {
@@ -51,7 +52,7 @@ export default function PostForm() {
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [sections, setSections] = useState<Section[]>([
-        { content: '', sort_order: 0 }
+        { content: '', sort_order: 0, image: null }
     ]);
     const supabase = createClient();
 
@@ -87,7 +88,7 @@ export default function PostForm() {
         if (error) {
             console.error('Error fetching post:', error);
             alert('Error fetching post');
-            router.push('/pages-admin/cms/posts');
+            router.push('/pages-admin/cms/info/posts');
         } else if (data) {
             setPost(data);
         }
@@ -172,6 +173,38 @@ export default function PostForm() {
         } catch (err) {
             console.error('Error in post_image upload:', err);
             alert(`Error saat mengupload post_image: ${err instanceof Error ? err.message : 'Unknown error'}`);
+        }
+    }
+
+    // Handler upload gambar untuk section
+    async function handleSectionImageUpload(e: React.ChangeEvent<HTMLInputElement>, index: number) {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+            alert('File harus berupa gambar');
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Ukuran file terlalu besar (max 5MB)');
+            return;
+        }
+        const fileExt = file.name.split('.').pop();
+        const fileName = `section-${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
+        const filePath = fileName;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('berita')
+            .upload(filePath, file);
+        if (uploadError) {
+            alert('Gagal upload gambar section');
+            return;
+        }
+        const { data: publicUrlData } = supabase.storage
+            .from('berita')
+            .getPublicUrl(filePath);
+        if (publicUrlData?.publicUrl) {
+            const updatedSections = [...sections];
+            updatedSections[index].image = publicUrlData.publicUrl;
+            setSections(updatedSections);
         }
     }
 
@@ -278,13 +311,14 @@ export default function PostForm() {
                 const validSections = sections.filter(section => section.content.trim() !== '');
 
                 // Always have at least one section, even if empty
-                const sectionsToInsert = validSections.length > 0 ? validSections : [{ content: '', sort_order: 0 }];
+                const sectionsToInsert = validSections;
 
                 // Prepare sections data with proper post_id and sequential sort_order
                 const preparedSections = sectionsToInsert.map((section, index) => ({
                     post_id: postId,
                     content: section.content,
                     sort_order: index,
+                    image: section.image || null,
                     created_at: new Date().toISOString()
                 }));
 
@@ -305,7 +339,7 @@ export default function PostForm() {
             }
 
             console.log("Post save process completed successfully");
-            router.push('/pages-admin/cms/posts');
+            router.push('/pages-admin/cms/info/posts');
         } catch (error) {
             const errorMessage = error instanceof Error
                 ? error.message
@@ -348,7 +382,7 @@ export default function PostForm() {
             ? Math.max(...sections.map(s => s.sort_order)) + 1
             : 0;
 
-        setSections([...sections, { content: '', sort_order: newSortOrder }]);
+        setSections([...sections, { content: '', sort_order: newSortOrder, image: null }]);
     }
 
     function removeSection(index: number) {
@@ -484,7 +518,17 @@ export default function PostForm() {
                                                     className="w-full px-3 py-2 border-input bg-background text-foreground rounded-md focus:ring-2 focus:ring-ring focus:border-ring focus:outline-none text-sm" // Styling textarea disesuaikan
                                                     rows={8}
                                                 />
-                                                <div className="text-xs text-muted-foreground/80 mt-2"> {/* Warna teks disesuaikan */}
+                                                {/* Input upload gambar section */}
+                                                <div className="mt-2">
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={(e) => handleSectionImageUpload(e, index)}
+                                                        className="block w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+                                                    />
+                                                    {section.image && (
+                                                        <img src={section.image} alt={`Section ${index + 1} Image`} className="mt-2 max-h-40 rounded" />
+                                                    )}
                                                 </div>
                                             </div>
                                         ))}
