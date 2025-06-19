@@ -201,7 +201,7 @@ export default function PostsManagement() {
                                 <p className="text-muted-foreground">No posts found. Create your first post!</p> {/* Warna teks disesuaikan */}
                             </div>
                         ) : (
-                            <div className="overflow-x-auto">
+                            <div> {/* Menghapus overflow-x-auto */}
                                 <table className="min-w-full divide-y divide-border"> 
                                     <thead className="bg-muted/50">
                                         <tr>
@@ -216,20 +216,20 @@ export default function PostsManagement() {
                                     <tbody className="bg-card divide-y divide-border"> 
                                         {filteredPosts.map((post) => (
                                             <tr key={post.id} className="hover:bg-muted/30 transition-colors">
-                                                <td className="px-4 py-2 whitespace-nowrap">
+                                                <td className="px-4 py-2"> {/* Menghapus whitespace-nowrap */}
                                                     <div className="text-sm font-medium text-foreground truncate max-w-xs">{post.title}</div> 
                                                     <div className="text-xs text-muted-foreground">{post.slug}</div> 
                                                 </td>
-                                                <td className="px-4 py-2 whitespace-nowrap">
+                                                <td className="px-4 py-2"> {/* Menghapus whitespace-nowrap */}
                                                     <div className="text-sm text-foreground">{getCategoryName(post.category_id)}</div> 
                                                 </td>
                                                 <td className="px-4 py-2 whitespace-nowrap">
                                                     {getStatusBadge(post.status)}
                                                 </td>
-                                                <td className="px-4 py-2 whitespace-nowrap">
+                                                <td className="px-4 py-2"> {/* Menghapus whitespace-nowrap */}
                                                     <div className="text-sm text-muted-foreground">{formatDate(post.published_at)}</div> 
                                                 </td>
-                                                <td className="px-4 py-2 whitespace-nowrap">
+                                                <td className="px-4 py-2"> {/* Menghapus whitespace-nowrap */}
                                                     <div className="text-sm text-muted-foreground">{formatDate(post.created_at)}</div>
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

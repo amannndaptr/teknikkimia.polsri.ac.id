@@ -316,7 +316,7 @@ function DosenManagementContent() { // Ubah nama komponen ini
         if (selectedRoleCategoryFilter === 'Dosen') {
             if (dsn.role !== 'Dosen') return false;
             if (selectedProdiFilter && dsn.prodi !== selectedProdiFilter) return false;
-        } else if (selectedRoleCategoryFilter === 'Tenaga Pendidik') {
+        } else if (selectedRoleCategoryFilter === 'Tenaga Kependidikan') {
             if (!dsn.role || !staffRolesList.includes(dsn.role)) return false;
             if (selectedStaffRoleFilter && dsn.role !== selectedStaffRoleFilter) return false;
         }
@@ -384,7 +384,7 @@ function DosenManagementContent() { // Ubah nama komponen ini
                                             Kategori
                                         </label>
                                         <div className="flex flex-wrap gap-2">
-                                            {['', 'Dosen', 'Tenaga Pendidik'].map(category => (
+                                            {['', 'Dosen', 'Tenaga Kependidikan'].map(category => (
                                                 <button
                                                     key={category || 'Semua'}
                                                     type="button"
@@ -435,11 +435,11 @@ function DosenManagementContent() { // Ubah nama komponen ini
                                             </div>
                                         </div>
                                     )}
-                                    {/* Sub-filter for Tenaga Pendidik - Staff Role */}
-                                    {selectedRoleCategoryFilter === 'Tenaga Pendidik' && (
+                                    {/* Sub-filter for Tenaga Kependidikan - Staff Role */}
+                                    {selectedRoleCategoryFilter === 'Tenaga Kependidikan' && (
                                         <div> {/* Removed pt-3 border-t border-border mt-3 wrapper */}
                                             <label className="block text-sm font-medium text-muted-foreground mb-1.5">
-                                                Filter Tenaga Pendidik
+                                                Filter Tenaga Kependidikan
                                             </label>
                                             <div className="flex flex-wrap gap-2">
                                                 <button
@@ -451,7 +451,7 @@ function DosenManagementContent() { // Ubah nama komponen ini
                                                             : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300'
                                                         }`}
                                                 >
-                                                    Semua Tenaga Pendidik
+                                                    Semua Tenaga Kependidikan
                                                 </button>
                                                 {staffRolesList.map(role => (
                                                     <button
@@ -649,7 +649,7 @@ function DosenManagementContent() { // Ubah nama komponen ini
                                                 <th className="px-1 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-[15%]">NIP</th>
                                                 <th className="px-1 py-2 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-[15%]">Prodi</th>
                                                 <th className="px-1 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider w-[12%]">Role</th>
-                                                {selectedRoleCategoryFilter !== 'Tenaga Pendidik' && (
+                                                {selectedRoleCategoryFilter !== 'Tenaga Kependidikan' && (
                                                     <th className="px-1 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider w-[10%]">Status</th>
                                                 )}
                                                 <th className="px-1 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider w-[10%]">Aksi</th>
@@ -668,7 +668,7 @@ function DosenManagementContent() { // Ubah nama komponen ini
                                                     <td className="px-1 py-2 whitespace-nowrap text-xs text-left truncate text-muted-foreground" title={dsn.nip}>{dsn.nip}</td>
                                                     <td className="px-1 py-2 whitespace-nowrap text-xs text-muted-foreground text-left truncate" title={dsn.prodi || undefined}>{dsn.prodi || '-'}</td>
                                                     <td className="px-1 py-2 whitespace-nowrap text-xs text-muted-foreground text-center truncate" title={dsn.role || undefined}>{dsn.role || (selectedRoleCategoryFilter === 'Dosen' ? 'Dosen' : '-')}</td>
-                                                    {selectedRoleCategoryFilter !== 'Tenaga Pendidik' && (
+                                                    {selectedRoleCategoryFilter !== 'Tenaga Kependidikan' && (
                                                         <td className="px-1 py-2 whitespace-nowrap text-xs text-center">
                                                             <span className={`px-2 py-1 text-xs rounded-full ${dsn.status_dosen === 'ASN' ? 'bg-green-100 text-green-800' : dsn.status_dosen === 'P3K' ? 'bg-blue-100 text-blue-800' : 'bg-muted text-muted-foreground'}`}>
                                                                 {dsn.status_dosen || 'Tidak diketahui'}

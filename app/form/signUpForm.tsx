@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 // Map for prodi codes that have a single, unambiguous program studi for auto-selection.
 const autoSelectProdiMap: Record<string, string> = {
     "3040": "D3 Teknik Kimia",             // Updated: 3040 now maps directly
-    "3046": "D3 Teknik Kimia PSDKU Siak",  // Added: New mapping for PSDKU Siak
+    "3046": "D3 Teknik Kimia PSDKU SIAK",  // Added: New mapping for PSDKU Siak
     "4041": "D4 Teknik Energi",
     "4042": "D4 Teknologi Kimia Industri",
     // Contoh penambahan untuk kode D3 lain (selain 3040 yang ditangani khusus)
@@ -25,7 +25,7 @@ const kelasProdiMap: Record<string, string[]> = {
     "D3 Teknik Kimia": ["KA", "KB", "KC", "KD", "KM"],
     "D4 Teknik Energi": ["EGA", "EGB", "EGC", "EGD", "EGM", "EGN"],
     "D4 Teknologi Kimia Industri": ["KIA", "KIB", "KIC", "KID", "KIM","KIN"],
-    "D3 Teknik Kimia PSDKU Siak": ["KS"],
+    "D3 Teknik Kimia PSDKU SIAK": ["KS"],
     // S2 Energi Terbarukan will use a text input for kelas
 };
 

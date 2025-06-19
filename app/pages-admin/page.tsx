@@ -195,9 +195,9 @@ function DashboardAdminContent() { // Ubah nama komponen ini
 
             <main className="ml-72 flex-1 px-6 md:px-10 pt-4 md:pt-6 pb-6 md:pb-10 w-[calc(100%-18rem)] min-h-screen overflow-y-auto bg-background"> {/* Diubah ke bg-background */}
                 {/* Kartu Informasi Admin */}
-                <div className="mb-10 p-8 bg-gradient-to-r from-sky-600 to-cyan-500 text-white rounded-2xl shadow-xl">
-                    <h1 className="text-4xl font-bold tracking-tight">Dashboard Administrasi</h1>
-                    <p className="mt-3 text-xl opacity-90">Jurusan Teknik Kimia Politeknik Negeri Sriwijaya</p>
+                <div className="mb-8 p-6 bg-gradient-to-r from-sky-600 to-cyan-500 text-white rounded-2xl shadow-xl">
+                    <h1 className="text-3xl font-bold tracking-tight">Dashboard Administrator</h1>
+                    <p className="mt-2 text-lg opacity-90">Jurusan Teknik Kimia Politeknik Negeri Sriwijaya</p>
                 </div>
 
                 {/* <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
@@ -205,157 +205,157 @@ function DashboardAdminContent() { // Ubah nama komponen ini
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     {/* Total Mahasiswa */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-purple-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-purple-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-purple-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-purple-100">
                             <AcademicCapIcon className="h-6 w-6 text-purple-600" /> {/* Diubah dari UsersIcon */}
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Mahasiswa</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{totalMahasiswa}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{totalMahasiswa}</p>
                         </div>
                     </div>
                     {/* Jumlah Dosen */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-rose-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-rose-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-rose-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-rose-100">
                             <UsersIcon className="h-6 w-6 text-rose-600" /> {/* Diubah dari AcademicCapIcon */}
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Dosen</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{jumlahDosen}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{jumlahDosen}</p>
                         </div>
                     </div>
                     {/* Jumlah Staff */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-teal-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-teal-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-teal-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-teal-100">
                             <BriefcaseIcon className="h-6 w-6 text-teal-600" />
                         </div>
                         <div>
-                            <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Tenaga Pendidik</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{jumlahStaff}</p>
+                            <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Tenaga Kependidikan</h2>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{jumlahStaff}</p>
                         </div>
                     </div>
                     {/* Jumlah Alumni */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-indigo-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-indigo-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-indigo-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-indigo-100">
                             <UserGroupIcon className="h-6 w-6 text-indigo-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Alumni</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{jumlahAlumni}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{jumlahAlumni}</p>
                         </div>
                     </div>
 
                     {/* Kompensasi Pending Admin Review */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-yellow-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-yellow-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-yellow-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-yellow-100">
                             <ClockIcon className="h-6 w-6 text-yellow-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Pengajuan Kompensasi</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{kompensasiPendingReview}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{kompensasiPendingReview}</p>
                         </div>
                     </div>
                     {/* Kompensasi Admin Verified */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-sky-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-sky-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-sky-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-sky-100">
                             <ShieldCheckIcon className="h-6 w-6 text-sky-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Kompensasi Terverifikasi</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{kompensasiAdminVerified}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{kompensasiAdminVerified}</p>
                         </div>
                     </div>
                     {/* Jumlah Kompensasi */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-fuchsia-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-fuchsia-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-fuchsia-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-fuchsia-100">
                             <GiftIcon className="h-6 w-6 text-fuchsia-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah Kompensasi</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{jumlahKompensasi}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{jumlahKompensasi}</p>
                         </div>
                     </div>
                     {/* Jumlah Kuesioner */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-purple-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-purple-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-purple-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-purple-100">
                             <ClipboardDocumentListIcon className="h-6 w-6 text-purple-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Kuesioner Dosen</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{jumlahKuesioner}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{jumlahKuesioner}</p>
                         </div>
                     </div>
                     
 
                     {/* Layanan Masuk */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-orange-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-orange-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-orange-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-orange-100">
                             <ArrowDownTrayIcon className="h-6 w-6 text-orange-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Layanan Masuk</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{layananMasuk}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{layananMasuk}</p>
                         </div>
                     </div>
                     {/* Layanan Diproses */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-amber-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-amber-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-amber-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-amber-100">
                             <ArrowPathIcon className="h-6 w-6 text-amber-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Layanan Diproses</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{layananDiproses}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{layananDiproses}</p>
                         </div>
                     </div>
                     {/* Layanan Selesai */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-green-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-green-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-green-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-green-100">
                             <CheckCircleIcon className="h-6 w-6 text-green-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Layanan Selesai</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{layananSelesai}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{layananSelesai}</p>
                         </div>
                     </div>
                     {/* Total Layanan */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-blue-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-blue-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-blue-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-blue-100">
                             <QueueListIcon className="h-6 w-6 text-blue-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Total Layanan</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{totalLayanan}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{totalLayanan}</p>
                             </div>
                         </div>
                     {/* Jumlah Beasiswa */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-pink-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-pink-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-pink-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-pink-100">
                             <CurrencyDollarIcon className="h-6 w-6 text-pink-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Beasiswa</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{jumlahBeasiswa}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{jumlahBeasiswa}</p>
                         </div>
                     </div>
                     {/* Jumlah Berita */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-cyan-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-cyan-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-cyan-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-cyan-100">
                             <NewspaperIcon className="h-6 w-6 text-cyan-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Berita</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{jumlahBerita}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{jumlahBerita}</p>
                         </div>
                     </div>
                     
                     {/* Jumlah Kegiatan */}
-                    <div className="bg-white rounded-lg shadow-md p-4 flex items-center space-x-3 transform hover:scale-103 transition-transform duration-300 border-l-4 border-lime-500">
-                        <div className="flex-shrink-0 p-2 rounded-full bg-lime-100">
+                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-lime-500">
+                        <div className="flex-shrink-0 p-1.5 rounded-full bg-lime-100">
                             <CalendarDaysIcon className="h-6 w-6 text-lime-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Kegiatan</h2>
-                            <p className="text-xl sm:text-2xl font-bold text-gray-900">{jumlahKegiatan}</p>
+                            <p className="text-lg sm:text-xl font-bold text-gray-900">{jumlahKegiatan}</p>
                         </div>
                     </div>
 
