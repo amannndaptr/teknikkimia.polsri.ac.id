@@ -126,20 +126,44 @@ export default function DashboardDosen() {
         }
     };
 
-    const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Fungsi upload ke Supabase Storage
+    const uploadPhotoToSupabase = async (file: File, nama: string) => {
+        const supabase = createClient();
+        const fileExt = file.name.split('.').pop();
+        const safeNama = (nama || 'dosen').replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+        const fileName = `${safeNama}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+        const { data, error } = await supabase.storage.from('dosen').upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: true,
+        });
+        if (error) throw error;
+        const { data: publicUrlData } = supabase.storage.from('dosen').getPublicUrl(fileName);
+        return publicUrlData.publicUrl;
+    };
+
+    const handleFotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            setSelectedFile(file); // Simpan objek File
-
-            // Buat Data URL untuk preview lokal
+            setSelectedFile(file);
+            // Preview lokal
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPhotoPreviewUrl(reader.result as string);
             };
             reader.readAsDataURL(file);
+            // Upload ke Supabase Storage
+            try {
+                setIsSubmitting(true);
+                const url = await uploadPhotoToSupabase(file, formData.nama);
+                setPhotoPreviewUrl(url); // Preview pakai URL hasil upload
+            } catch (err: any) {
+                alert('Gagal upload foto: ' + (err?.message || 'Unknown error'));
+            } finally {
+                setIsSubmitting(false);
+            }
         } else {
             setSelectedFile(null);
-            setPhotoPreviewUrl(user?.foto || "/default-profile.jpg"); // Kembali ke foto user jika batal pilih
+            setPhotoPreviewUrl(user?.foto || "/default-profile.jpg");
         }
     };
 
@@ -170,72 +194,20 @@ export default function DashboardDosen() {
             return;
         }
 
-        let fotoDataToSave: string | null = user.foto || null; // Default ke foto yang sudah ada (bisa URL lama atau Base64 baru)
+        let fotoDataToSave: string | null = user.foto || null;
+        if (selectedFile && photoPreviewUrl && !isBase64DataURL(photoPreviewUrl)) {
+            // Jika sudah upload ke Supabase, photoPreviewUrl adalah URL
+            fotoDataToSave = photoPreviewUrl;
+        }
 
         try {
-            if (selectedFile && photoPreviewUrl) {
-                // Jika file baru dipilih, photoPreviewUrl sudah berisi Base64 data URL
-                fotoDataToSave = photoPreviewUrl;
-            }
-            // Bagian Supabase Storage dihapus
-            /*
-                const fileExt = selectedFile.name.split('.').pop() || 'jpg'; // Ambil ekstensi file
-                const fileName = `profile.${fileExt}`; // Nama file konsisten untuk overwrite
-                const filePath = `foto/dosen/${user.id_dsn}/${fileName}`;
-                
-                // Fungsi untuk membersihkan nama dosen menjadi nama file yang aman
-                const sanitizeFilename = (name: string): string => {
-                    if (!name || name.trim() === "") return "profil_dosen"; // Fallback jika nama kosong
-                    return name
-                        .trim()
-                        .toLowerCase()
-                        .replace(/\s+/g, '_') // Ganti spasi dengan underscore
-                        .replace(/[^\w-]/g, '') // Hapus semua karakter kecuali huruf, angka, underscore, dan tanda hubung
-                        .replace(/_{2,}/g, '_') // Ganti multiple underscore dengan satu
-                        .replace(/--+/g, '-')   // Ganti multiple tanda hubung dengan satu
-                        .replace(/^-+|-+$/g, '') // Hapus tanda hubung/underscore di awal/akhir
-                        .substring(0, 50); // Batasi panjang nama file (misalnya 50 karakter)
-                };
-
-                const baseFileName = sanitizeFilename(formData.nama); // Gunakan nama dari form data
-                const newFileName = `${baseFileName}.${fileExt}`;
-                const newFilePath = newFileName;
-
-                // Ganti 'NAMA_BUCKET_ANDA' dengan nama bucket Anda di Supabase Storage
-                const { data: uploadData, error: uploadError } = await supabase.storage // Pastikan nama bucket di sini adalah 'dosen'
-                    .from('dosen')
-                    .upload(newFilePath, selectedFile, {
-                        cacheControl: '3600',
-                        upsert: true, // true: timpa jika file sudah ada
-                    });
-
-                if (uploadError) {
-                    console.error("Gagal mengunggah foto:", uploadError.message);
-                    alert(`Gagal memproses foto: ${uploadError.message}. Perubahan tidak disimpan.`);
-                    setIsSubmitting(false);
-                    return;
-                }
-
-                const { data: publicUrlData } = supabase.storage // Pastikan nama bucket di sini adalah 'dosen'
-                    .from('dosen')
-                    .getPublicUrl(newFilePath);
-
-                if (!publicUrlData?.publicUrl) {
-                    console.error("Gagal mendapatkan URL publik foto setelah upload.");
-                    alert("Gagal memproses URL foto. Perubahan tidak disimpan.");
-                    setIsSubmitting(false);
-                    return;
-                }
-                fotoDataToSave = publicUrlData.publicUrl;
-            */
-
             const payloadToUpdate = {
-                ...formData, // nama, nidn, prodi, dll.
+                ...formData,
                 nip: formData.nip || null,
                 nuptk: formData.nuptk || null,
                 prodi: formData.prodi || null,
                 status_dosen: formData.status_dosen || null,
-                foto: fotoDataToSave, // String Base64 atau URL lama atau null
+                foto: fotoDataToSave, // URL hasil upload
             };
 
             console.log("Payload yang akan diupdate:", payloadToUpdate);

@@ -69,7 +69,7 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
                         newNimError = "";
                     } else {
                         derivedProdi = ""; // Clear prodi if code not recognized
-                        newNimError = "Program Studi tidak dapat ditentukan dari NIM (kode prodi tidak dikenali).";
+                        newNimError = "NIM yang Anda masukkan tidak valid.";
                     }
                 } else {
                     newAngkatan = ""; // Invalid full NIM format, clear angkatan derived from first 4 digits
@@ -126,7 +126,7 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
             }
         } else if (prodi.startsWith("D4")) {
             if (tahunSekarang - tahunAngkatan >= 4) {
-                setMasaStudiError("Hanya mahasiswa aktif yang bisa mendaftar.");
+                setMasaStudiError("Maaf, hanya mahasiswa aktif yang bisa mendaftar.");
             } else {
                 setMasaStudiError("");
             }
@@ -191,7 +191,7 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
                             </p>
                         ) : (
                             <p className="w-full bg-muted border border-input rounded-md p-2.5 text-sm text-muted-foreground italic">
-                                terisi otomatis dari NIM
+                                angkatan akan terisi otomatis
                             </p>
                         )}
                     </div>
@@ -219,7 +219,7 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
                     ) : (
                         <>
                             <p id="prodi-display" className="w-full bg-muted border border-input rounded-md p-2.5 text-sm text-muted-foreground italic">
-                                terisi otomatis
+                                prodi akan terisi otomatis
                             </p>
                             <input type="hidden" name="prodi" value="" />
                         </>

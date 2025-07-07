@@ -24,7 +24,7 @@ export const addDosenAction = async (formData: FormData) => {
   const prodi = formData.get("prodi")?.toString() || "";
   const status_dosen = formData.get("status_dosen")?.toString() || "";
   const role = formData.get("role")?.toString() || "Dosen";
-  const fotoBase64 = formData.get("foto")?.toString() || "";
+  const fotoUrl = formData.get("foto")?.toString() || "";
 
   if (!email || !password) {
     return encodedRedirect(
@@ -64,7 +64,7 @@ export const addDosenAction = async (formData: FormData) => {
         nuptk: nuptk,
         prodi: prodi,
         status_dosen: status_dosen,
-        foto: fotoBase64,
+        foto: fotoUrl,
         role: role
       });
     if (insertError) {
@@ -105,7 +105,7 @@ export const updateDosenAction = async (formData: FormData) => {
   const prodi = formData.get("prodi")?.toString() || "";
   const status_dosen = formData.get("status_dosen")?.toString() || "";
   const role = formData.get("role")?.toString() || "Dosen";
-  const fotoBase64 = formData.get("foto")?.toString() || formData.get("current_foto")?.toString() || "";
+  const fotoUrl = formData.get("foto")?.toString() || formData.get("current_foto")?.toString() || "";
 
   if (!id_dsn || !email || !nama || !nip) {
     return encodedRedirect(
@@ -126,7 +126,7 @@ export const updateDosenAction = async (formData: FormData) => {
       nuptk: nuptk,
       prodi: prodi,
       status_dosen: status_dosen,
-      foto: fotoBase64,
+      foto: fotoUrl,
       role: role
     })
     .eq('id_dsn', id_dsn);
