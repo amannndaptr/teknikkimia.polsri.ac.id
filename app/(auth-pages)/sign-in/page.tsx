@@ -41,7 +41,7 @@ export default async function SignIn(props: {
             <p className="text-xs text-muted-foreground mt-1 text-center"> {/* Mengubah ukuran font menjadi text-xs */}
               Don't have an account?{" "}
               <Link className="text-primary font-medium hover:underline transition-all" href="/sign-up">
-                Sign up
+                Sign Up
               </Link>
             </p>
           </div>

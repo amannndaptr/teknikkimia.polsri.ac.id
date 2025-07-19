@@ -504,7 +504,7 @@ export default function MahasiswaManagement() {
                                                     <th className="px-1 py-2 text-center text-sm font-medium text-muted-foreground uppercase tracking-wider hidden">Angkatan</th>
                                                     <th className="px-1 py-2 text-center text-sm font-medium text-muted-foreground uppercase tracking-wider w-[18%]">Prodi</th>
                                                     <th className="px-1 py-2 text-center text-sm font-medium text-muted-foreground uppercase tracking-wider w-[10%]">Kelas</th>
-                                                    <th className="px-1 py-2 text-center text-sm font-medium text-muted-foreground uppercase tracking-wider w-[14%]">Jabatan Kelas</th>
+                                                    <th className="px-1 py-2 text-center text-sm font-medium text-muted-foreground uppercase tracking-wider w-[14%] hidden">Jabatan Kelas</th>
                                                     <th className="px-1 py-2 text-center text-sm font-medium text-muted-foreground uppercase tracking-wider w-[10%]">Aksi</th>
                                                 </tr>
                                             </thead>
@@ -531,7 +531,7 @@ export default function MahasiswaManagement() {
                                                         <td className="px-1 py-2 whitespace-nowrap text-sm text-muted-foreground text-center truncate hidden" title={mhs.angkatan || undefined}>{mhs.angkatan || '-'}</td>
                                                         <td className="px-1 py-2 whitespace-nowrap text-sm text-muted-foreground text-center truncate" title={mhs.prodi || undefined}>{mhs.prodi || '-'}</td>
                                                         <td className="px-1 py-2 whitespace-nowrap text-sm text-muted-foreground text-center truncate" title={mhs.kelas || undefined}>{mhs.kelas || '-'}</td>
-                                                        <td className="px-1 py-2 whitespace-nowrap text-sm text-muted-foreground text-center truncate" title={mhs.jabatan_kelas || undefined}>{mhs.jabatan_kelas || '-'}</td>
+                                                        <td className="px-1 py-2 whitespace-nowrap text-sm text-muted-foreground text-center truncate hidden" title={mhs.jabatan_kelas || undefined}>{mhs.jabatan_kelas || '-'}</td>
                                                         <td className="px-1 py-2 whitespace-nowrap text-sm font-medium text-center">
                                                             <button
                                                                 onClick={() => startEdit(mhs)}

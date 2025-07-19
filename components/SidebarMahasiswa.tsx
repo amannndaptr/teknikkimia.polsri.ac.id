@@ -118,12 +118,7 @@ export default function SidebarMahasiswa() {
                     onClick={() => router.push("/pages-mahasiswa")}
                     isActive={pathname === "/pages-mahasiswa"}
                 />
-                <SidebarButton
-                    icon={<FiEdit />}
-                    label="Kompensasi"
-                    onClick={() => router.push("/pages-mahasiswa/kompensasi")}
-                    isActive={pathname.startsWith("/pages-mahasiswa/kompensasi")}
-                />
+                
                 <SidebarButton
                     icon={<FiMessageSquare />}
                     label={

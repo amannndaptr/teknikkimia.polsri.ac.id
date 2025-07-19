@@ -245,40 +245,10 @@ function DashboardAdminContent() { // Ubah nama komponen ini
                         </div>
                     </div>
 
-                    {/* Kompensasi Pending Admin Review */}
-                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-yellow-500">
-                        <div className="flex-shrink-0 p-1.5 rounded-full bg-yellow-100">
-                            <ClockIcon className="h-6 w-6 text-yellow-600" />
-                        </div>
-                        <div>
-                            <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Pengajuan Kompensasi</h2>
-                            <p className="text-lg sm:text-xl font-bold text-gray-900">{kompensasiPendingReview}</p>
-                        </div>
-                    </div>
-                    {/* Kompensasi Admin Verified */}
+                    {/* Jumlah Kuesioner */}
                     <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-sky-500">
                         <div className="flex-shrink-0 p-1.5 rounded-full bg-sky-100">
-                            <ShieldCheckIcon className="h-6 w-6 text-sky-600" />
-                        </div>
-                        <div>
-                            <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Kompensasi Terverifikasi</h2>
-                            <p className="text-lg sm:text-xl font-bold text-gray-900">{kompensasiAdminVerified}</p>
-                        </div>
-                    </div>
-                    {/* Jumlah Kompensasi */}
-                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-fuchsia-500">
-                        <div className="flex-shrink-0 p-1.5 rounded-full bg-fuchsia-100">
-                            <GiftIcon className="h-6 w-6 text-fuchsia-600" />
-                        </div>
-                        <div>
-                            <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah Kompensasi</h2>
-                            <p className="text-lg sm:text-xl font-bold text-gray-900">{jumlahKompensasi}</p>
-                        </div>
-                    </div>
-                    {/* Jumlah Kuesioner */}
-                    <div className="bg-white rounded-lg shadow-md p-3 flex items-center space-x-2 transform hover:scale-103 transition-transform duration-300 border-l-4 border-purple-500">
-                        <div className="flex-shrink-0 p-1.5 rounded-full bg-purple-100">
-                            <ClipboardDocumentListIcon className="h-6 w-6 text-purple-600" />
+                            <ClipboardDocumentListIcon className="h-6 w-6 text-sky-600" />
                         </div>
                         <div>
                             <h2 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Kuesioner Dosen</h2>

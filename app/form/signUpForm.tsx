@@ -35,7 +35,6 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
     const [prodi, setProdi] = useState(""); // State for Program Studi, initial empty for placeholder
     const [kelas, setKelas] = useState(""); // State for Kelas
     const [kelasOptions, setKelasOptions] = useState<string[]>([]); // State for dynamic kelas options
-    const [jabatanKelas, setJabatanKelas] = useState(""); // State for Jabatan Kelas
     const [nimError, setNimError] = useState(""); // State for NIM validation errors
     const [masaStudiError, setMasaStudiError] = useState(""); // State for Masa Studi validation errors
 
@@ -120,7 +119,7 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
         const tahunSekarang = new Date().getFullYear();
         if (prodi.startsWith("D3")) {
             if (tahunSekarang - tahunAngkatan >= 3) {
-                setMasaStudiError("Hanya mahasiswa aktif yang bisa mendaftar. Masa studi D3 sudah lebih dari 3 tahun.");
+                setMasaStudiError("Maaf, hanya mahasiswa aktif yang bisa mendaftar.");
             } else {
                 setMasaStudiError("");
             }
@@ -182,20 +181,6 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
                         )}
                     </div>
 
-                    {/* Angkatan Display - Moved and Restyled */}
-                    <div className="space-y-2">
-                        <Label className="text-sm font-medium">Angkatan</Label>
-                        {angkatan && !nimError ? (
-                            <p className="w-full bg-muted border border-input rounded-md p-2.5 text-sm text-muted-foreground">
-                                {angkatan}
-                            </p>
-                        ) : (
-                            <p className="w-full bg-muted border border-input rounded-md p-2.5 text-sm text-muted-foreground italic">
-                                angkatan akan terisi otomatis
-                            </p>
-                        )}
-                    </div>
-
                     <div className="space-y-2"> {/* Full Name field remains here */}
                         <Label htmlFor="nama" className="text-sm font-medium">Nama Lengkap</Label>
                         <Input
@@ -219,23 +204,37 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
                     ) : (
                         <>
                             <p id="prodi-display" className="w-full bg-muted border border-input rounded-md p-2.5 text-sm text-muted-foreground italic">
-                                prodi akan terisi otomatis
+                                terisi secara otomatis
                             </p>
                             <input type="hidden" name="prodi" value="" />
                         </>
                     )}
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="kelas" className="text-sm font-medium">Kelas</Label>
-                        {prodi === "S2 Energi Terbarukan" ? (
-                            <Input
-                                name="kelas"
-                                value={kelas}
-                                onChange={(e) => setKelas(e.target.value)}
-                                placeholder="Masukkan Kelas (jika ada)"
-                                className="w-full bg-background border-input focus:border-primary focus:ring-primary transition-all"
-                            />
+                
+                {/* Angkatan Display - Moved and Restyled */}
+                    <div className="space-y-2 mt-4">
+                        <Label className="text-sm font-medium">Angkatan</Label>
+                        {angkatan && !nimError ? (
+                            <p className="w-full bg-muted border border-input rounded-md p-2.5 text-sm text-muted-foreground">
+                                {angkatan}
+                            </p>
+                        ) : (
+                            <p className="w-full bg-muted border border-input rounded-md p-2.5 text-sm text-muted-foreground italic">
+                                terisi secara otomatis
+                            </p>
+                        )}
+                    </div>
+
+                <div className="space-y-2 mt-4">
+                    <Label htmlFor="kelas" className="text-sm font-medium">Kelas</Label>
+                    {prodi === "S2 Energi Terbarukan" ? (
+                        <Input
+                        name="kelas"
+                        value={kelas}
+                        onChange={(e) => setKelas(e.target.value)}
+                        placeholder="Masukkan Kelas (jika ada)"
+                        className="w-full bg-background border-input focus:border-primary focus:ring-primary transition-all"
+                        />
                         ) : (
                             <select
                                 name="kelas"
@@ -246,27 +245,11 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
                             >
                                 <option value="">Pilih Kelas</option>
                                 {kelasOptions.map(kOpt => (
-                                    <option key={kOpt} value={kOpt}>{kOpt}</option>
+                                    <option key={kOpt} value={kOpt}>{kOpt.split('-')[0]}</option>
                                 ))}
                             </select>
                         )}
                     </div>
-
-                    <div className="space-y-2">
-                        <Label htmlFor="jabatan_kelas" className="text-sm font-medium">Jabatan Kelas</Label>
-                        <select
-                            name="jabatan_kelas"
-                            value={jabatanKelas}
-                            onChange={(e) => setJabatanKelas(e.target.value)}
-                            className="w-full bg-background border border-input rounded-md p-2 focus:border-primary focus:ring-primary transition-all"
-                            required // Jabatan kelas sekarang wajib diisi
-                        >
-                            <option value="">Pilih Jabatan</option>
-                            <option value="Anggota Kelas">Anggota Kelas</option>
-                            <option value="Sekretaris">Sekretaris</option>
-                        </select>
-                    </div>
-                </div>
 
                 {/* Hidden angkatan field that will be auto-filled from NIM */}
                 <input
@@ -298,12 +281,11 @@ export function SignupForm({ searchParams }: { searchParams: Message }) {
                         !nim ||
                         !prodi ||
                         (prodi && prodi !== "S2 Energi Terbarukan" && !kelas) ||
-                        !jabatanKelas ||
                         !!masaStudiError // Tidak bisa daftar jika masa studi lewat batas
                     )}
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-2.5 rounded-md transition-all"
                 >
-                    Buat Akun
+                    Create Account
                 </SubmitButton>
             </div>
 

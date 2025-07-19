@@ -24,7 +24,6 @@ export default function SidebarAdmin() {
   const router = useRouter();
   const pathname = usePathname();
   const [isManajemenUserOpen, setIsManajemenUserOpen] = useState(false);
-  const [isKompensasiOpen, setIsKompensasiOpen] = useState(false);
   const [isKuesionerOpen, setIsKuesionerOpen] = useState(false);
 
   // States for CMS sub-menus
@@ -39,11 +38,6 @@ export default function SidebarAdmin() {
     const isManajemenUserChildActive = pathname.startsWith('/pages-admin/data-management/mahasiswa') || 
                                        pathname.startsWith('/pages-admin/data-management/dosen');
     setIsManajemenUserOpen(isManajemenUserChildActive);
-
-    const isKompensasiChildActive = pathname.startsWith('/pages-admin/kompensasi/informasi') || 
-                                    pathname.startsWith('/pages-admin/kompensasi/dosen-pa') || 
-                                    pathname.startsWith('/pages-admin/kompensasi/review-pengajuan');
-    setIsKompensasiOpen(isKompensasiChildActive);
 
     const isKuesionerChildActive = pathname.startsWith('/pages-admin/kuesioner/baru') || 
                                    pathname.startsWith('/pages-admin/kuesioner');
@@ -73,7 +67,6 @@ export default function SidebarAdmin() {
   // Function to close all menus
   const closeAllMenus = () => {
     setIsManajemenUserOpen(false);
-    setIsKompensasiOpen(false);
     setIsKuesionerOpen(false);
     setIsCMSOpen(false);
     setIsCMSHomeOpen(false);
@@ -122,7 +115,6 @@ export default function SidebarAdmin() {
           onClick={() => {
             const newOpenState = !isManajemenUserOpen;
             setIsManajemenUserOpen(newOpenState);
-            setIsKompensasiOpen(false);
             setIsKuesionerOpen(false);
             setIsCMSOpen(false);
             setIsCMSHomeOpen(false);
@@ -155,51 +147,6 @@ export default function SidebarAdmin() {
           </div>
         )}
 
-        {/* Kompensasi section */}
-        <SidebarButton
-          icon={<FiClipboard />}
-          label={
-            <div className="flex justify-between items-center w-full">
-              <span>Kompensasi</span>
-              {isKompensasiOpen ? <FiChevronDown size={18} /> : <FiChevronRight size={18} />}
-            </div>
-          }
-          onClick={() => {
-            const newOpenState = !isKompensasiOpen;
-            setIsKompensasiOpen(newOpenState);
-            setIsManajemenUserOpen(false);
-            setIsKuesionerOpen(false);
-            setIsCMSOpen(false);
-            setIsCMSHomeOpen(false);
-            setIsCMSProfilOpen(false);
-            setIsCMSInformasiOpen(false);
-          }}
-          isExpanded={isKompensasiOpen}
-        />
-        
-        {isKompensasiOpen && (
-          <div className="pl-6 mt-1 space-y-1">
-            <SidebarButton
-              icon={<FiInfo size={20} className="text-white/80" />}
-              label="Informasi Kompensasi"
-              onClick={() => router.push('/pages-admin/kompensasi/informasi')} // Path ke halaman informasi kompensasi
-              isActive={pathname.startsWith('/pages-admin/kompensasi/informasi')} // Aktif jika path dimulai dengan ini
-            />
-            <SidebarButton
-              icon={<FiUsers size={20} className="text-white/80" />}
-              label="Kelola Dosen PA"
-              onClick={() => router.push('/pages-admin/kompensasi/dosen-pa')} // Path ke halaman kelola dosen PA
-              isActive={pathname.startsWith('/pages-admin/kompensasi/dosen-pa')} // Aktif jika path dimulai dengan ini
-            />
-            <SidebarButton
-              icon={<FiCheckSquare size={20} className="text-white/80" />}
-              label="Review Pengajuan"
-              onClick={() => router.push('/pages-admin/kompensasi/review-pengajuan')} // Path ke halaman review pengajuan
-              isActive={pathname.startsWith('/pages-admin/kompensasi/review-pengajuan')} // Aktif jika path dimulai dengan ini
-            />
-          </div>
-        )}
-
         {/* Layanan Mahasiswa section */}
         <SidebarButton
           icon={<FiMessageSquare />}
@@ -224,7 +171,6 @@ export default function SidebarAdmin() {
             const newOpenState = !isKuesionerOpen;
             setIsKuesionerOpen(newOpenState);
             setIsManajemenUserOpen(false);
-            setIsKompensasiOpen(false);
             setIsCMSOpen(false);
             setIsCMSHomeOpen(false);
             setIsCMSProfilOpen(false);
@@ -263,7 +209,6 @@ export default function SidebarAdmin() {
             const newOpenState = !isCMSOpen;
             setIsCMSOpen(newOpenState);
             setIsManajemenUserOpen(false);
-            setIsKompensasiOpen(false);
             setIsKuesionerOpen(false);
             if (!newOpenState) {
               setIsCMSHomeOpen(false);

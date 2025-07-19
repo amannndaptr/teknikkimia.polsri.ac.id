@@ -138,12 +138,7 @@ export default function SidebarDosen() {
                     onClick={() => closeAllMenusAndNavigate("/pages-dosen")}
                     isActive={pathname === "/pages-dosen"}
                 />
-                <SidebarButton
-                    icon={<FiFileText />}
-                    label="Kompensasi"
-                    onClick={() => closeAllMenusAndNavigate("/pages-dosen/kompensasi")}
-                    isActive={pathname === "/pages-dosen/kompensasi"}
-                />
+                
                 <SidebarButton
                     icon={<FiEdit />}
                     label="Evaluasi Kinerja"

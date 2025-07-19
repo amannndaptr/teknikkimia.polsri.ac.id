@@ -23,12 +23,12 @@ export default async function Signup(props: {
     >
       <div className="w-full max-w-lg bg-white bg-opacity-95 rounded-lg shadow-xl p-10 mx-4 overflow-y-auto max-h-[90vh]">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-semibold text-primary mb-2">Sign up</h1>
+          <h1 className="text-3xl font-semibold text-primary mb-2">Sign Up</h1>
           <div className="h-1 w-16 bg-primary mx-auto rounded-full"></div>
           <p className="text-sm text-muted-foreground mt-4">
             Already have an account?{" "}
             <Link className="text-primary font-medium hover:underline transition-all" href="/sign-in">
-              Sign in
+              Sign In
             </Link>
           </p>
         </div>
